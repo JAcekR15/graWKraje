@@ -1,0 +1,78 @@
+*{
+    font-family: cursive;
+}
+
+
+#eu {
+    text-align: center;
+    font-size: x-large;
+    
+}
+
+#dane {
+    background: #ccc0c0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+    width: 60vw;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    border-radius: 5%;
+    border: 2px black solid;
+}
+#gracz {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2vh;
+    flex-direction: column;
+    background: #978686;
+    height: 20vh;
+    width: 60vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+#statystyki {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2vh;
+    flex-direction: column;
+    background: #d4c8c8;
+    height: 20vh;
+    width: 60vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+input {
+    border: 2px solid;
+    margin: 1vh;
+}
+.his {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 70vw;
+    height: 25vh;
+    background: #e5afaf;
+    margin-left:    auto;
+    margin-right: auto;
+    justify-content: center;
+    align-items: center;
+    margin: 2px;
+
+}
+#z {
+    text-align: center;
+    font-size: x-large;
+}
+.m1 {
+display: flex;
+
+}
+#flaga {
+width: min-content;
+height: min-content;
+}
