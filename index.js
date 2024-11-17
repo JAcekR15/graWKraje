@@ -1,7 +1,10 @@
-let dane;
-let Eu = [];
-const btn = document.querySelector("#check");
 let p = 0;
+let C = 0;
+let I = 0;
+let gra = 1;
+let dane = [];
+let Eu = [];
+
 async function pobierz() {
   const response = await fetch("https://restcountries.com/v3.1/all");
   dane = await response.json();
@@ -19,7 +22,7 @@ pobierz();
 
 async function losuj() {
   const Country = document.querySelector("#kraj");
-  const img = document.querySelector("img");
+  const img = document.querySelector("#flaga");
 
   let random = Math.floor(Math.random() * Eu.length);
   p = random;
@@ -28,80 +31,90 @@ async function losuj() {
   console.log(Eu[random].capital);
 }
 
+const gameDiv = document.createElement("div");
+const nrGry = document.createElement("p");
+
+gameDiv.appendChild(nrGry);
+document.body.appendChild(gameDiv);
+
+let his = document.createElement("div");
+his.classList.add("his");
+document.body.appendChild(his);
+nrGry.textContent = `Gra ${gra}`;
+his.appendChild(nrGry);
+
+const correct = document.getElementById("correct");
+const incorrect = document.getElementById("incorrect");
+const life = document.querySelector("#life");
+
+correct.textContent = 0;
+incorrect.textContent = 0;
+life.textContent = 3;
+
+const btn = document.querySelector("#check");
 btn.addEventListener("click", graP);
 
-let C = 0;
-const correct = document.getElementById("correct");
-let I = 0;
-const incorrect = document.getElementById("incorrect");
-
-
-const his = document.createElement("historia");
-const paragRA
-his.classList.add("his")
-document.body.appendChild(his)
-
-
 function graP() {
-  const inp = document.querySelector("input");
-  const div = document.createElement("div");
-  const imgH = document.createElement("img");
-  const para = document.createElement("p")
+  const input = document.querySelector("#inp1");
 
-  const img2 = document.createElement("img")
-  if (inp.value == Eu[p].capital) {
+  const ul = document.createElement("ul");
+  his.appendChild(ul);
+
+  const li = document.createElement("li");
+  ul.appendChild(li);
+
+  const imgHis = document.createElement("img");
+  imgHis.src = Eu[p].flags.png;
+  li.appendChild(imgHis);
+
+  const countryName = document.createTextNode(Eu[p].name.common);
+
+  if (input.value == Eu[p].capital) {
     C++;
-    correct.textContent = `Poprawne:${C}`;
-
-    his.appendChild(div);
-    his.appendChild(imgH);
-    his.appendChild(para)
-    para.textContent = Eu[p].name.common;
-    imgH.src = Eu[p].flags.png;
-    imgH.style.width = `40px`;
-    imgH.style.height = `40px`;
-    para.style.color = "green"
-        imgH.style.marginLeft = `30px`
-            inp.value = ""
-    imgH.style.border = `1px solid black`;
-  } else if (I == 4) {
-    I++;
-    incorrect.textContent = `Niepoprawne:${I}`;
-    btn.disabled = "disabled";
-
-    
-    his.appendChild(div);
-    his.appendChild(imgH);
-    his.appendChild(para)
-    para.textContent = Eu[p].name.common;
-    imgH.src = Eu[p].flags.png;
-    imgH.style.width = `40px`;
-    imgH.style.height = `40px`;
-    para.style.color = "red"
-    imgH.style.border = `1px solid black`;
-    imgH.style.marginLeft = `30px`
-    inp.value = ""
-
-    const his = document.createElement("historia");
-    his.classList.add("his")
-document.body.appendChild(his)
+    correct.textContent = C;
+    li.style.color = "green";
   } else {
     I++;
-    inp.value = ""
-    incorrect.textContent = `Niepoprawne:${I}`;
-
-    his.appendChild(div);
-    his.appendChild(imgH);
-    his.appendChild(para)
-    para.textContent = Eu[p].name.common;
-    imgH.src = Eu[p].flags.png;
-    imgH.style.width = `40px`;
-    para.style.color = "red"
-    imgH.style.height = `40px`;
-    imgH.style.border = `1px solid black`;
-        imgH.style.marginLeft = `30px`
-
+    incorrect.textContent = I;
+    life.textContent = 3 - I;
+    li.style.color = "red";
   }
+
+  li.appendChild(countryName);
+
+  if (I >= 3) {
+    const totalAttempts = C + I;
+    const percentage = ((C / totalAttempts) * 100).toFixed(2);
+    const percentageText = document.createElement("p");
+    percentageText.textContent = `Procent poprawnych odpowiedzi: ${percentage}%`;
+    his.appendChild(percentageText);
+
+    btn.textContent = "Reset";
+    btn.removeEventListener("click", graP);
+    btn.addEventListener("click", resetGame);
+  } else {
+    losuj();
+  }
+}
+
+function resetGame() {
+  C = 0;
+  I = 0;
+  gra++;
+  correct.textContent = 0;
+  incorrect.textContent = 0;
+  life.textContent = 3;
+
+  const nrGry = document.createElement("p");
+  nrGry.textContent = `Gra ${gra}`;
+  his = document.createElement("div");
+  his.classList.add("his");
+  his.appendChild(nrGry);
+  document.body.appendChild(his);
+
+  btn.textContent = "Sprawdź";
+  btn.removeEventListener("click", resetGame);
+  btn.addEventListener("click", graP);
 
   losuj();
 }
