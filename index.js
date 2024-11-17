@@ -55,7 +55,7 @@ const btn = document.querySelector("#check");
 btn.addEventListener("click", graP);
 
 function graP() {
-  const input = document.querySelector("#inp1");
+  const input1 = document.querySelector("#inp1");
 
   const ul = document.createElement("ul");
   his.appendChild(ul);
@@ -69,15 +69,17 @@ function graP() {
 
   const countryName = document.createTextNode(Eu[p].name.common);
 
-  if (input.value == Eu[p].capital) {
+  if (input1.value == Eu[p].capital) {
     C++;
     correct.textContent = C;
     li.style.color = "green";
+    input1.value = "";
   } else {
     I++;
     incorrect.textContent = I;
     life.textContent = 3 - I;
     li.style.color = "red";
+    input1.value = "";
   }
 
   li.appendChild(countryName);
@@ -88,7 +90,9 @@ function graP() {
     const percentageText = document.createElement("p");
     percentageText.textContent = `Procent poprawnych odpowiedzi: ${percentage}%`;
     his.appendChild(percentageText);
-
+    input1.value =   "";
+    input1.style.display = "none";
+    btn.style.background = "red";
     btn.textContent = "Reset";
     btn.removeEventListener("click", graP);
     btn.addEventListener("click", resetGame);
@@ -98,13 +102,15 @@ function graP() {
 }
 
 function resetGame() {
+  const input2 = document.querySelector("#inp1");
+  input2.style.display = "";
   C = 0;
   I = 0;
   gra++;
   correct.textContent = 0;
   incorrect.textContent = 0;
   life.textContent = 3;
-
+  btn.style.background = "white";
   const nrGry = document.createElement("p");
   nrGry.textContent = `Gra ${gra}`;
   his = document.createElement("div");
